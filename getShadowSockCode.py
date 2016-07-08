@@ -10,6 +10,17 @@ from bs4 import BeautifulSoup
 import re
 
 
+
+try:
+    html = urlopen("http://www.ishadowsocks.net/")
+    beauty = BeautifulSoup(html, "lxml")
+    lines = beauty.find("section", {"id": "free"}).findAll("div", {"class": "col-lg-4 text-center"})
+    for line in lines:
+        print(line.get_text())
+except (HTTPError, ConnectionError) as e:
+    print(e)
+
+
 pattern = re.compile("iframe")
 pattern1 = re.compile("\"(.+?)\"")
 try:
@@ -33,16 +44,3 @@ try:
                     print(result)
 except (HTTPError, ConnectionError) as e:
     print(e)
-
-try:
-    html = urlopen("http://www.ishadowsocks.net/")
-    beauty = BeautifulSoup(html, "lxml")
-    lines = beauty.find("section", {"id": "free"}).findAll("div", {"class": "col-lg-4 text-center"})
-    for line in lines:
-        print(line.get_text())
-except (HTTPError, ConnectionError) as e:
-    print(e)
-
-
-
-
